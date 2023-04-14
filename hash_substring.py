@@ -3,7 +3,7 @@ def read_input():
     input_type = input().rstrip()
 
     # Read the pattern and text depending on the input type
-    if input_type == 'i':
+    if input_type == 'I':
         pattern = input().rstrip()
         text = input().rstrip()
     else:
