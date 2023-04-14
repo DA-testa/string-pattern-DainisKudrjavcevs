@@ -6,10 +6,23 @@ def read_input():
     if input_type == 'I':
         pattern = input().rstrip()
         text = input().rstrip()
-    else:
-        with open(input_type, 'r') as f:
-            pattern = f.readline().rstrip()
-            text = f.readline().rstrip()
+    elif input_type == "F":
+        filename = input().strip()
+        if str(filename[-1]) != "a":
+            try:
+                with open(f"./tests/{filename}") as f:
+                    contents = f.readlines()
+            except FileNotFoundError:
+                print("File not found")
+                return
+            except:
+                print("Error reading file")
+                return
+            pattern = contents[0].strip()
+            text = contents[1].strip()
+            return pattern, text
+        else:
+            print("Invalid filename")
 
     return pattern, text
 
