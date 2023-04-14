@@ -4,9 +4,7 @@ def read_input():
     if input_method == "I":
         pattern = input().strip()
         text = input().strip()
-        occurrences = get_occurrences(pattern, text)
-        print_occurrences(occurrences)
-        return pattern, text, occurrences
+        return pattern, text
 
     elif input_method == "F":
         filename = input().strip()
@@ -22,12 +20,11 @@ def read_input():
                 return
             pattern = contents[0].strip()
             text = contents[1].strip()
-            occurrences = get_occurrences(pattern, text)
-            print_occurrences(occurrences)
-            return pattern, text, occurrences
+            return pattern, text
         else:
             print("Invalid filename")
             return
+
 
 def print_occurrences(output):
     print(' '.join(map(str, output)))
