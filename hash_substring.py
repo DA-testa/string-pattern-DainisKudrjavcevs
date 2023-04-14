@@ -1,60 +1,29 @@
-def keyboard():
-    n = input().strip()
-
-    if n:
-        if not n.isdigit() or int(n) <= 0:
-            print("Invalid input: n must be a positive integer")
-            return None
-        
-        data = list(map(int, input().strip().split(" ")))
-        return data
-
-    return None
-
-
-def file(filename):
-    try:
-        with open(f"./tests/{filename}") as f:
-            contents = f.readlines()
-    except FileNotFoundError:
-        print("File not found")
-        return None
-    except:
-        print("Error reading file")
-        return None
-    
-    n = contents[0].strip()
-    if not n:
-        print("Invalid input: n not provided")
-        return None
-    
-    data = list(map(int, contents[1].strip().split(" ")))
-    if not data:
-        print("Invalid input: data not provided")
-        return None
-    
-    return data
-
 def read_input():
     # Get the input type choice
     input_type = input().rstrip()
 
     # Read the pattern and text depending on the input type
     if input_type == 'I':
-        data = keyboard()
-        if data:
-            return data
+        pattern = input().rstrip()
+        text = input().rstrip()
     elif input_type == "F":
-        filename = input().strip()
+        filename = "06"
         if str(filename[-1]) != "a":
-            data = file(filename)
-            if data:
-                return data
+            try:
+                with open(f"./tests/06") as f:
+                    contents = f.readlines()
+            except FileNotFoundError:
+                print("File not found")
+                return
+            except:
+                print("Error reading file")
+                return
+            pattern = contents[0].strip()
+            text = contents[1].strip()
         else:
             print("Invalid filename")
 
-    return None
-
+    return pattern, text
 
 
 def print_occurrences(output):
