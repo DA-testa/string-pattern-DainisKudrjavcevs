@@ -6,6 +6,7 @@ def read_input():
         text = input().strip()
         occurrences = get_occurrences(pattern, text)
         print_occurrences(occurrences)
+        return pattern, text, occurrences
 
     elif input_method == "F":
         filename = input().strip()
