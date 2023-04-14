@@ -2,29 +2,26 @@ def print_occurrences(output):
     print(' '.join(map(str, output)))
 
 def get_occurrences(pattern, text):
+    occurrences = []
     p_len = len(pattern)
     t_len = len(text)
-    prime = 10 ** 9 + 7
-    x = 1
-    for i in range(p_len):
-        x = (x * 263) % prime
-    p_hash = 0
-    t_hash = 0
-    x_pow_p = (x ** (p_len - 1)) % prime
-    
-    occurrences = []
-    for i in range(p_len):
-        p_hash = (p_hash * 263 + ord(pattern[i])) % prime
-        t_hash = (t_hash * 263 + ord(text[i])) % prime
-    for i in range(t_len - p_len + 1):
-        if p_hash == t_hash:
-            if pattern == text[i:i+p_len]:
-                occurrences.append(i)
-        if i < t_len - p_len:
-            t_hash = (t_hash - ord(text[i]) * x_pow_p) % prime
-            t_hash = (t_hash * 263 + ord(text[i+p_len])) % prime
-            t_hash = (t_hash + prime) % prime
+    prime = 1000000007
+    x = 263
+    if p_len > t_len:
+        return []
+
+    p_hash = sum(ord(pattern[i]) * pow(x, i, prime) for i in range(p_len)) % prime
+    t_hash = sum(ord(text[i]) * pow(x, i, prime) for i in range(p_len)) % prime
+    x_p = pow(x, p_len - 1, prime)
+
+    for i, char in enumerate(text):
+        if i >= p_len:
+            t_hash = ((t_hash - ord(text[i - p_len]) * x_p) * x + ord(char)) % prime
+        if p_hash == t_hash and pattern == text[i - p_len + 1:i + 1]:
+            occurrences.append(i - p_len + 1)
+
     return occurrences
+
 
 def main():
     input_method = input().strip()
@@ -51,6 +48,8 @@ def main():
             text = contents[1].strip()
             occurrences = get_occurrences(pattern, text)
             print_occurrences(occurrences)
+        else:
+            print("Invalid filename")
 
 if __name__ == '__main__':
     main()
