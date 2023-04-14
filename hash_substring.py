@@ -1,12 +1,55 @@
 # python3
 
-def read_input():
+def keyboard():
     type = input().rstrip()
-    if type == "I":
-        return (input().rstrip(), input().rstrip)
-    else:
-        with open ('tests.txt', 'r') as f:
-            return (f.readline().rstrip(), f.readline().rstrip())
+    if type:
+        parents = input().strip().split(" ")
+        if parents:
+            return type, parents
+
+    return None, None
+
+def file(filename):
+    try:
+        with open(f"./tests/{filename}") as f:
+            contents = f.readlines()
+    except FileNotFoundError:
+        print("File not found")
+        return None, None
+    except:
+        print("Error reading file")
+        return None, None
+    
+    type = contents[0].strip()
+    if not type:
+        print("Invalid input: n not provided")
+        return None, None
+    
+    parents = contents[1].strip().split(" ")
+    if not parents:
+        print("Invalid input: parents not provided")
+        return None, None
+    
+    return type, parents
+
+def main():
+    height = get_occurrences(type, parents)
+    input_method = input().strip()
+
+    if input_method == "I":
+        type, parents = keyboard()
+        if type and parents:
+            height = get_occurrences(type, parents)
+            print(int(height))
+
+    elif input_method == "F":
+        filename = input().strip()
+        if str(filename[-1]) != "a":
+            type, parents = file(filename)
+            if type and parents:
+                height = get_occurrences(type, parents)
+                print(int(height))
+
 
 def print_occurrences(output):
     print(' '.join(map(str, output)))
@@ -35,6 +78,4 @@ def get_occurrences(pattern, text):
             t_hash = (t_hash + kopa) % kopa
     return occurrences 
 
-if __name__ == '__main__':
-    print_occurrences(get_occurrences(*read_input()))
 
