@@ -19,7 +19,7 @@ def read_input():
                 print("Error reading file")
                 return
             pattern = contents[0].strip()
-            return pattern, text
+            text = contents[1].strip()
         else:
             print("Invalid filename")
 
