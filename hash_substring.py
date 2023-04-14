@@ -1,32 +1,40 @@
 # python3
 
 def read_input():
-    # this function needs to aquire input both from keyboard and file
-    # as before, use capital i (input from keyboard) and capital f (input from file) to choose which input type will follow
-    
-    
-    # after input type choice
-    # read two lines 
-    # first line is pattern 
-    # second line is text in which to look for pattern 
-    
-    # return both lines in one return
-    
-    # this is the sample return, notice the rstrip function
-    return (input().rstrip(), input().rstrip())
+    type = input().rstrip()
+    if type == "I":
+        return (input().rstrip(), input().rstrip)
+    else:
+        with open ('tests.txt', 'r') as f:
+            return (f.readline().rstrip(), f.readline().rstrip())
 
 def print_occurrences(output):
-    # this function should control output, it doesn't need any return
     print(' '.join(map(str, output)))
 
 def get_occurrences(pattern, text):
-    # this function should find the occurances using Rabin Karp alghoritm 
+    p_garums = len(pattern)
+    t_garums = len(text)
+    kopa = 10 ** 9 + 7
+    x=1
+    for i in range(p_garums):
+        x = (x * 263) % kopa
+    p_hash = 0
+    t_hash = 0
+    
+    occurrences  = []
+    for i in range(p_garums):
+        p_hash = (p_hash * 263 + ord(pattern[i])) % kopa
+        t_hash = (t_hash * 263 + ord(text[i])) % kopa
+    for i in range(t_garums - p_garums + 1):
+        if p_hash == t_hash:
+            if pattern == text[i:i+p_garums]:
+                occurrences.append(i)
+        if i < t_garums - p_garums:
+            t_hash = (t_hash - ord(text[i]) * x) % kopa
+            t_hash = (t_hash * 263 + ord(text[i+p_garums])) % kopa
+            t_hash = (t_hash + kopa) % kopa
+    return occurrences 
 
-    # and return an iterable variable
-    return [0]
-
-
-# this part launches the functions
 if __name__ == '__main__':
     print_occurrences(get_occurrences(*read_input()))
 
