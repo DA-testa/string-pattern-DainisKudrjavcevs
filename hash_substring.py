@@ -23,13 +23,13 @@ def read_input():
             text = contents[1].strip()
             occurrences = get_occurrences(pattern, text)
             print_occurrences(occurrences)
+            return pattern, text, occurrences
         else:
             print("Invalid filename")
-        return pattern, text
-        
+            return
 
 def print_occurrences(output):
-    print(''.join(map(str, output)))
+    print(' '.join(map(str, output)))
 
 def get_occurrences(pattern, text):
     occurrences = []
@@ -53,4 +53,4 @@ def get_occurrences(pattern, text):
     return occurrences
 
 if __name__ == '__main__':
-    print_occurrences(get_occurrences(*read_input()))
+    read_input()
