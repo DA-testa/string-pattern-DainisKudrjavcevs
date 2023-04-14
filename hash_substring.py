@@ -33,8 +33,8 @@ def get_occurrences(pattern, text):
     occurrences = []
     p_len = len(pattern)
     t_len = len(text)
-    prime = 1000000007
-    x = 263
+    prime = 101
+    x = 256
     if p_len > t_len:
         return []
 
