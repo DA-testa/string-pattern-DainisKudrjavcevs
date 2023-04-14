@@ -1,5 +1,3 @@
-# python3
-
 def print_occurrences(output):
     print(' '.join(map(str, output)))
 
@@ -53,3 +51,6 @@ def main():
             text = contents[1].strip()
             occurrences = get_occurrences(pattern, text)
             print_occurrences(occurrences)
+
+if __name__ == '__main__':
+    main()
